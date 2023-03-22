@@ -1,12 +1,10 @@
 package com.superhero.controller;
 
 
+import com.superhero.config.TimeTaken;
 import com.superhero.services.HeroServices;
 import com.superhero.shared.HeroDTO;
 import io.swagger.v3.oas.annotations.Operation;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
-import org.springframework.cache.annotation.Caching;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,6 +28,7 @@ public class HeroController {
 
     @Operation(summary = "list All heros in database", description = "getAllheros")
     @GetMapping("/all")
+    @TimeTaken
     public List<HeroDTO> getAllheros() {
         return heroServices.getAllhero();
     }
@@ -37,12 +36,14 @@ public class HeroController {
 
     @Operation(summary = "hero list with id : {id}", description = "getHero")
     @GetMapping("/{id}")
+    @TimeTaken
     public HeroDTO getHero(@PathVariable Long id) {
         return heroServices.getHeroById(id);
     }
 
     @Operation(summary = "Add a hero", description = "addhero")
     @PutMapping("/add")
+    @TimeTaken
     public HeroDTO addhero(@RequestBody HeroDTO data ) {
         return heroServices.create(data);
     }
@@ -59,8 +60,8 @@ public class HeroController {
     }
     @Operation(summary = "list the heroes that contain \"name\"", description = "getHeroLike")
     @GetMapping("/filter/{name}")
+    @TimeTaken
     public List<HeroDTO> getHeroLike(@PathVariable String name) {
-
         return heroServices.listHeroLike(name);
     }
 
